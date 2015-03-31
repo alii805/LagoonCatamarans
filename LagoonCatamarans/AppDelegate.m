@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
+#import "MainViewController.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface AppDelegate ()
 
@@ -16,7 +19,30 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
+        
+        CLLocationManager *locationManager = [[CLLocationManager alloc] init];
+        if([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            
+            [locationManager requestWhenInUseAuthorization];
+        }
+        else {
+            
+            [locationManager startUpdatingLocation];
+        }
+    }
+    
+//    
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"loginDone"]) {
+//        MainViewController *mVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"mainVC"];
+//        self.window.rootViewController = mVC;
+//    }
+//    else {
+//        ViewController *vC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"vc"];
+//        self.window.rootViewController = vC;
+//    }
+    
     return YES;
 }
 
